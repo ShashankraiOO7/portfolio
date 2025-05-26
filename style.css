@@ -1,0 +1,680 @@
+html {
+    height: 100%;
+    /* background-color: #000020; Removed, canvas will cover */
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    color: #f0f0f0; /* Changed from #333 to light grey/off-white */
+    /* background: linear-gradient(-45deg, #000020, #101040, #00A0A0, #400040); Removed */
+    /* background-size: 400% 400%; Removed */
+    /* animation: gradientBG 15s ease infinite; Removed */
+    min-height: 100%; 
+    padding-bottom: 60px; /* Adjusted for the new footer height */
+    background-color: #000010; /* Fallback dark background */
+}
+
+/* @keyframes gradientBG { Removed keyframes as well
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+} */
+
+#aiCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Places canvas behind other content */
+    pointer-events: none; /* Allows clicks to go through the canvas */
+}
+
+header {
+    /* background-color: rgba(255, 255, 255, 0.75); Old transparent white */
+    background-color: rgba(20, 30, 100, 0.20); /* From 0.18 to 0.20 */
+    color: #f0f0f0; /* Light text color for contrast against blue background */
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    color: #ffffff; /* White for heading */
+}
+
+header p { /* For the subtitle */
+    color: #e0e0e0; /* Lighter grey for subtitle */
+    margin: 0.5em 0;
+}
+
+header nav {
+    margin: 1em 0;
+    display: flex; /* Use flexbox for button layout */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    justify-content: center; /* Center the buttons */
+    gap: 10px; /* Spacing between nav buttons */
+}
+
+header nav a {
+    color: #ffffff; /* White text for buttons */
+    background-color: rgba(70, 130, 180, 0.30); /* From 0.28 to 0.30 (slightly more opaque for buttons) */
+    text-decoration: none;
+    padding: 10px 18px; 
+    border-radius: 5px; 
+    font-size: 1em; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1px solid rgba(100, 180, 255, 0.4);
+}
+
+header nav a:hover {
+    background-color: rgba(100, 180, 255, 0.40); /* From 0.38 to 0.40 */
+    transform: translateY(-2px);
+}
+
+header button#downloadResumeBtn { 
+    background-color: rgba(60, 110, 150, 0.7); /* Keep higher opacity for primary action */
+    color: #f0f0f0;
+    border: 1px solid rgba(100, 180, 255, 0.5);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 15px; /* Spacing from nav */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+header button#downloadResumeBtn:hover {
+    background-color: rgba(80, 130, 170, 0.9);
+    transform: translateY(-2px);
+}
+
+/* General link styling for content sections if needed */
+section a {
+    color: #87CEFA; /* LightSkyBlue for links within sections */
+    text-decoration: none;
+}
+
+section a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    /* padding-bottom will be handled by body or we can add it here too */
+    /* Let's remove padding-bottom from main if we add it to body, or ensure they don't conflict */
+    /* For simplicity, main's specific padding will be for its content, body handles overall page scroll behavior */
+}
+
+section {
+    margin-bottom: 20px;
+    padding: 20px;
+    /* Changed from rgba(173, 216, 230, 0.25) */
+    background-color: rgba(20, 30, 70, 0.20); /* From 0.18 to 0.20 */
+    border-radius: 5px;
+}
+
+.project {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+/* Styles for details/summary if not covered by inline styles or to override */
+details {
+    background-color: rgba(25, 40, 80, 0.25); /* From 0.5 to 0.25 (was an outlier, now in line) */
+    border: 1px solid rgba(70, 130, 180, 0.3);
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px; /* Ensure spacing */
+}
+
+summary {
+    color: #f0f0f0; /* Ensure summary text is light */
+    /* font-weight: bold; and cursor: pointer; are in your inline styles */
+}
+
+#skills ul.skills-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Removed old #skills li styling as structure has changed */
+/* New styling for skill category items */
+.skill-category-item {
+    background-color: rgba(30, 45, 85, 0.25); /* From 0.35 to 0.25 */
+    border: 1px solid rgba(70, 130, 180, 0.3);
+    padding: 15px;
+    border-radius: 8px; 
+    margin-bottom: 20px; /* Space between categories */
+}
+
+.skill-category-item strong { /* Main category title: e.g., Programming */
+    color: #ADD8E6; /* LightBlue */
+    display: block; 
+    margin-bottom: 12px; 
+    font-size: 1.2em; /* Larger than before */
+    border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+    padding-bottom: 8px;
+}
+
+.skill-subcategory-title {
+    display: block;
+    color: #B0C4DE; /* LightSteelBlue, slightly dimmer than main category */
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.skill-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Gap between individual skill tags */
+}
+
+.skill-tag {
+    background-color: rgba(70, 130, 180, 0.25); /* From 0.22 to 0.25 */
+    color: #f0f0f0;
+    padding: 5px 12px;
+    border-radius: 15px; /* Pill shape */
+    font-size: 0.9em;
+    display: inline-block; /* Ensures tags flow well */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.skill-tag:hover {
+    background-color: rgba(100, 180, 255, 0.35); /* From 0.32 to 0.35 */
+    transform: translateY(-2px);
+}
+
+/* Remove or adapt old skills list styling */
+/* #skills ul.skills-list { ... } */
+
+/* === Skills Section - Single Dropdown === */
+
+/* Remove/comment out old styles for individual category dropdowns if they exist */
+/*
+#skills .skill-category-details {
+    background-color: rgba(30, 45, 85, 0.35);
+    border: 1px solid rgba(70, 130, 180, 0.3);
+    padding: 10px 15px; 
+    border-radius: 8px;
+    margin-bottom: 15px; 
+}
+#skills .skill-category-details summary {
+    font-weight: bold;
+    cursor: pointer;
+    color: #ADD8E6; 
+    font-size: 1.2em;
+    padding: 8px 0; 
+    outline: none; 
+    list-style-position: inside; 
+}
+#skills .skill-category-details summary::marker, 
+#skills .skill-category-details summary::-webkit-details-marker {
+    color: #ADD8E6;
+}
+#skills .skill-category-details .skill-tags-container { 
+    padding-top: 10px; 
+}
+*/
+
+#skills .skills-main-dropdown { /* The main <details> tag for all skills */
+    background-color: rgba(20, 30, 70, 0.20); /* From 0.18 to 0.20 */
+    border: 1px solid rgba(70, 130, 180, 0.4);
+    padding: 15px 25px;
+    border-radius: 8px;
+    margin-top: 20px; /* Space below the "Skills" H2 */
+}
+
+#skills .skills-main-dropdown > summary { /* Targeting the direct summary of the main dropdown */
+    font-weight: bold;
+    cursor: pointer;
+    color: #D8E8FF; /* Bright, clear color for the main toggle */
+    font-size: 1.35em;
+    padding: 12px 0;
+    outline: none;
+    list-style-position: inside;
+    transition: color 0.3s ease;
+}
+#skills .skills-main-dropdown > summary:hover {
+    color: #FFFFFF;
+}
+
+#skills .skills-main-dropdown > summary::marker,
+#skills .skills-main-dropdown > summary::-webkit-details-marker {
+    color: #D0E0F8;
+}
+
+.skills-all-categories-container { /* Wrapper for all category blocks inside main dropdown */
+    padding-top: 20px; 
+    border-top: 1px solid rgba(70, 130, 180, 0.2); /* Separator line */
+    margin-top: 15px; /* Space after summary before content starts */
+}
+
+.skill-category-block { /* Container for each category (e.g., Programming, ML) */
+    background-color: rgba(30, 45, 85, 0.20); /* From 0.18 to 0.20 */
+    border: 1px solid rgba(70, 130, 180, 0.25);
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+}
+
+.skill-category-block:last-child {
+    margin-bottom: 10px; /* Reduced margin for the last block */
+}
+
+.skill-category-block h3 { /* Titles like "Programming", "Machine Learning" */
+    color: #C8D8F0; 
+    display: block;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-bottom: 1px solid rgba(100, 180, 255, 0.25);
+    padding-bottom: 10px;
+}
+
+/* Styles for .skill-subcategory-title, .skill-tags-container, and .skill-tag can remain as they are general */
+.skill-subcategory-title {
+    display: block;
+    color: #B8C8E0; /* Adjusted for new context if needed */
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 10px;
+    font-size: 1.05em;
+    width: 100%;
+}
+
+.skill-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Increased gap slightly for better spacing */
+}
+
+.skill-tag {
+    background-color: rgba(70, 130, 180, 0.25); /* From 0.22 to 0.25 */
+    color: #f0f0f0;
+    padding: 6px 14px; /* Slightly more padding */
+    border-radius: 18px; /* More rounded */
+    font-size: 0.9em;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-tag:hover {
+    background-color: rgba(100, 180, 255, 0.35); /* From 0.32 to 0.35 */
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0px 3px 10px rgba(100, 180, 255, 0.3);
+}
+
+/* Blog Slider Styles */
+#blogs .blog-slider-container {
+    position: relative;
+    width: 80%; /* Adjust width as needed */
+    max-width: 600px; /* Maximum width of the slider */
+    margin: 20px auto; /* Center the slider */
+    overflow: hidden; /* Important for the sliding effect */
+    background-color: rgba(20, 30, 70, 0.20); /* From 0.18 to 0.20 */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#blogs .blog-slider-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    /* Width will be set by JavaScript based on number of slides */
+}
+
+#blogs .blog-slide {
+    min-width: 100%; /* Each slide takes full width of the container */
+    box-sizing: border-box;
+    padding: 15px;
+    text-align: center;
+}
+
+#blogs .blog-slide h3 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+#blogs .blog-slide h3 a {
+    color: #ADD8E6; /* LightBlue for blog titles */
+    text-decoration: none;
+}
+
+#blogs .blog-slide h3 a:hover {
+    text-decoration: underline;
+}
+
+#blogs .blog-slide .blog-platform {
+    font-size: 0.9em;
+    color: #B0C4DE; /* LightSteelBlue */
+    margin-bottom: 15px;
+}
+
+#blogs .blog-slide .read-more-btn {
+    display: inline-block;
+    background-color: rgba(70, 130, 180, 0.30); /* From 0.28 to 0.30 */
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+#blogs .blog-slide .read-more-btn:hover {
+    background-color: rgba(100, 180, 255, 0.40); /* From 0.38 to 0.40 */
+}
+
+#blogs .blog-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.25); /* From 0.2 to 0.25 */
+    color: #f0f0f0;
+    border: none;
+    padding: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 20px; /* Center the arrow */
+    transition: background-color 0.3s ease;
+}
+
+#blogs .blog-slider-btn:hover {
+    background-color: rgba(255, 255, 255, 0.45); /* From 0.4 to 0.45 */
+}
+
+#blogs .blog-slider-btn.prev {
+    left: 10px;
+}
+
+#blogs .blog-slider-btn.next {
+    right: 10px;
+}
+
+/* About Me Section - Image on Right */
+#about {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    gap: 30px; /* Space between text and image */
+    padding: 30px 25px; /* Slightly more padding */
+    background-color: rgba(20, 30, 70, 0.20); /* From 0.18 to 0.20 */
+    border-radius: 10px; /* Slightly more pronounced rounding for the whole section */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#about .about-content {
+    flex: 2; /* Text content takes more space */
+    /* min-width: 0; /* Prevents flex items from overflowing if content is too wide */
+}
+
+#about .about-content h2 {
+    margin-top: 0; /* Remove default top margin if section has padding */
+    border-bottom: 2px solid rgba(100, 180, 255, 0.3);
+    padding-bottom: 10px;
+    margin-bottom: 20px; /* More space after H2 */
+}
+
+#about .about-content p {
+    font-size: 1.05em; /* Slightly larger text */
+    line-height: 1.7;
+}
+
+#about .about-image {
+    flex: 1; /* Image content takes less space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* min-width: 0; */
+}
+
+#about .about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%; /* Makes the image circular */
+    border: 4px solid rgba(100, 180, 255, 0.65); /* Thicker, more opaque border */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    max-height: 250px; /* Control max image height */
+    object-fit: cover; /* Ensures the image covers the area nicely, especially if not square */
+    aspect-ratio: 1 / 1; /* Keeps it a circle even if original is not square */
+}
+
+/* Responsive adjustment for About Me section */
+@media (max-width: 768px) {
+    #about {
+        flex-direction: column; /* Stack text and image on smaller screens */
+        align-items: center; /* Center items when stacked */
+        text-align: center;
+    }
+
+    #about .about-content {
+        margin-bottom: 20px;
+    }
+
+    #about .about-image img {
+        max-height: 200px; /* Slightly smaller image on mobile */
+    }
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: rgba(10, 20, 50, 0.20); /* From 0.18 to 0.20 */
+    color: #a0b0c0; /* Lighter grey for footer text */
+    font-size: 0.9em;
+    /* position: fixed; bottom: 0; width: 100%; */ /* Not fixed this time, normal flow */
+    border-top: 1px solid rgba(70, 130, 180, 0.2);
+}
+
+/* Styling for card-based items in sections */
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Space between cards */
+    padding-top: 15px; /* Space below the section H2 */
+}
+
+.item-card {
+    background-color: rgba(30, 45, 85, 0.20); /* From 0.18 to 0.20 */
+    border: 1px solid rgba(70, 130, 180, 0.35);
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.item-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(70, 130, 180, 0.25);
+}
+
+.item-card p {
+    margin: 0; /* Remove default paragraph margin inside cards */
+    line-height: 1.6;
+}
+
+.item-card p strong { /* For emphasizing part of the text in a card, e.g., certificate name */
+    color: #C8D8F0; /* Lighter color for emphasis */
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* --- Contact Section Styling --- */
+#contact.contact-section-card {
+    background-color: rgba(20, 30, 70, 0.20); /* From 0.1 to 0.20 */
+    padding: 25px;
+    border-radius: 8px;
+    /* box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Existing section shadow might be too subtle with high transparency */
+}
+
+.contact-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px; /* Increased gap for button layout */
+    margin-bottom: 25px;
+}
+
+/* New styles for contact buttons */
+.contact-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #f0f0f0;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.contact-button-icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.contact-button.email-btn {
+    background-color: rgba(80, 150, 200, 0.25); /* Specific color for email button */
+    border-color: rgba(100, 180, 255, 0.35);
+}
+.contact-button.email-btn:hover {
+    background-color: rgba(100, 180, 255, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(100, 180, 255, 0.2);
+}
+
+.contact-button.phone-btn {
+    background-color: rgba(70, 180, 140, 0.25); /* Specific color for phone button */
+    border-color: rgba(90, 200, 160, 0.35);
+}
+.contact-button.phone-btn:hover {
+    background-color: rgba(90, 200, 160, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 200, 160, 0.2);
+}
+/* End new styles for contact buttons */
+
+.contact-info-item p { /* This class is no longer used for email/phone but might be for other items if added */
+    margin: 0;
+    font-size: 1.05em;
+}
+
+.contact-info-item p strong {
+    color: #C8D8F0;
+    margin-right: 8px;
+}
+
+.contact-social-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.social-link {
+    display: inline-block;
+    margin: 0 12px;
+    padding: 10px 20px;
+    border-radius: 25px; /* Pill shape */
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1px solid transparent; /* For structure, can be colored on hover */
+}
+
+.social-link.github {
+    background-color: rgba(50, 50, 50, 0.30); /* From 0.28 to 0.30 */
+    border-color: rgba(80,80,80,0.3);
+}
+.social-link.github:hover {
+    background-color: rgba(80, 80, 80, 0.40); /* From 0.38 to 0.40 */
+    transform: translateY(-2px);
+}
+
+.social-link.linkedin {
+    background-color: rgba(0, 100, 180, 0.30); /* From 0.28 to 0.30 */
+    border-color: rgba(0,120,200,0.3);
+}
+.social-link.linkedin:hover {
+    background-color: rgba(0, 120, 200, 0.40); /* From 0.38 to 0.40 */
+    transform: translateY(-2px);
+}
+
+.social-link.kaggle {
+    background-color: rgba(30, 150, 200, 0.30); /* From 0.28 to 0.30 */
+    border-color: rgba(30,170,220,0.3);
+}
+.social-link.kaggle:hover {
+    background-color: rgba(30, 170, 220, 0.40); /* From 0.38 to 0.40 */
+    transform: translateY(-2px);
+}
+
+/* Adjust text color if it becomes hard to read with extreme transparency */
+/* Ensure main body color is sufficiently contrasted if all sections are very transparent */
+body {
+    color: #f0f0f0; /* This should still be fine */
+    /* background-color: #000010; The canvas animation will be very prominent */
+}
+
+header nav a, header button#downloadResumeBtn { /* Ensure button text is visible */
+    color: #f0f0f0; /* Might need stronger contrast if their backgrounds also become 10% opaque */
+     background-color: rgba(70, 130, 180, 0.30); /* Nav buttons also more transparent */
+}
+header nav a:hover, header button#downloadResumeBtn:hover {
+    background-color: rgba(100, 180, 255, 0.40); 
+}
+
+.skill-tag {
+    background-color: rgba(70, 130, 180, 0.25); /* From 0.22 to 0.25 */
+}
+.skill-tag:hover {
+    background-color: rgba(100, 180, 255, 0.35); /* From 0.32 to 0.35 */
+}
+
+#blogs .blog-slide .read-more-btn {
+    background-color: rgba(70, 130, 180, 0.30); /* From 0.28 to 0.30 */
+}
+#blogs .blog-slide .read-more-btn:hover {
+    background-color: rgba(100, 180, 255, 0.40); /* From 0.38 to 0.40 */
+}
+
+footer {
+    background-color: rgba(10, 20, 50, 0.20); /* From 0.18 to 0.20 */
+}
+
+/* Ensure general section H2 titles are visible */
+section h2 {
+    color: #E0E0FF; /* Bright light blue/lavender for H2s */
+    border-bottom-color: rgba(100, 180, 255, 0.25); /* From 0.22 to 0.25 */
+}
+
+/* Details summary text color */
+#skills .skills-main-dropdown > summary {
+    color: #D8E8FF; 
+}
+
+/* Links within sections */
+section a {
+    color: #97ceff; /* Slightly brighter link color */
+}
+
+/* Ensure summary text in <details> (like education) is visible */
+details summary {
+    color: #D8E8FF; /* General summary color, from inline style or previous general one */
+} 
