@@ -444,14 +444,14 @@ summary {
 }
 
 #about .about-image img {
-    max-width: 100%;
+    width: 100%;
+    max-width: 300px;        /* Adjust size: make it large */
     height: auto;
-    border-radius: 50%; /* Makes the image circular */
-    border: 4px solid rgba(100, 180, 255, 0.65); /* Thicker, more opaque border */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    max-height: 250px; /* Control max image height */
-    object-fit: cover; /* Ensures the image covers the area nicely, especially if not square */
-    aspect-ratio: 1 / 1; /* Keeps it a circle even if original is not square */
+    border-radius: 50% / 40%; /* Oval shape: wider than it is tall */
+    border: 4px solid rgba(100, 180, 255, 0.65);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    object-fit: cover;
+    aspect-ratio: 3 / 4;     /* Makes the oval vertically taller */
 }
 
 /* Responsive adjustment for About Me section */
