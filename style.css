@@ -457,8 +457,8 @@ summary {
 /* Responsive adjustment for About Me section */
 @media (max-width: 768px) {
     #about {
-        flex-direction: column; /* Stack text and image on smaller screens */
-        align-items: center; /* Center items when stacked */
+        flex-direction: column;
+        align-items: center;
         text-align: center;
     }
 
@@ -467,9 +467,16 @@ summary {
     }
 
     #about .about-image img {
-        max-height: 200px; /* Slightly smaller image on mobile */
+        max-width: 250px;
+        border-radius: 50% / 45%;
+        object-fit: cover;
+        aspect-ratio: 3 / 4;
+        border: 4px solid rgba(100, 180, 255, 0.65);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 }
+
+
 
 /* Footer Styles */
 footer {
